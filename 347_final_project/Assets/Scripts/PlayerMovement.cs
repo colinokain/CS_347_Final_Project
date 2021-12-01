@@ -1,6 +1,4 @@
-﻿
-
-
+﻿/*
 
 
 
@@ -103,4 +101,4 @@ public class PlayerMovement : MonoBehaviour
             return direction * (acceleration * accSprintMultiplier); // "sprinting"
         return direction * acceleration; // "walking"
     }
-}
+}*/

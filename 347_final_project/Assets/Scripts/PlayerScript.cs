@@ -2,14 +2,29 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class script_PlayerMovement : MonoBehaviour {
-    public GameObject canvas;  // for pauseing
+using UnityEngine.UI;
+
+public class PlayerScript : MonoBehaviour
+{
+    [Header("Inspector-set Values:")]
+    public Text taskUI;
+    public GameObject canvas;  // for pausing
     CharacterController controller;
 
     public float speed;
 
+    private string task;
+    private int currentTaskNum;
+    private string[] taskList = new string[] { "radio" };
 
-    void Start() {
+
+
+
+    void Start()
+    {
+        currentTaskNum = 0;
+        task = "radio";
+        taskUI.text = "Current Task: " + task;
         speed = 4.5f;
         controller = GetComponent<CharacterController>();
         Cursor.visible = false;
@@ -36,9 +51,15 @@ public class script_PlayerMovement : MonoBehaviour {
 
         // currentRotation.x = Mathf.Clamp(currentRotation.x, -45, 100);
         // transform.localRotation = Quaternion.Euler(currentRotation);
+
     }
 
-    void FixedUpdate() {
+    void FixedUpdate()
+    {
+        if (taskList[currentTaskNum] != task)
+        {
+            UpdateTask();
+        }
         return;  // stop from running while I work on different movement code 
         Vector3 pos;
         Vector3 v;
@@ -48,9 +69,9 @@ public class script_PlayerMovement : MonoBehaviour {
         Quaternion horiz;
         Quaternion vert;
 
-
-        if(PauseMenu.isPaused) {}
-        else {
+        if (PauseMenu.isPaused) { }
+        else
+        {
             // rotation
             mouseDelta = new Vector2(Input.GetAxis("Mouse X"), -Input.GetAxis("Mouse Y"));
             rotation = transform.rotation;
@@ -61,16 +82,20 @@ public class script_PlayerMovement : MonoBehaviour {
 
             // position
             v = new Vector3(0f, 0f, 0f);
-            if (Input.GetKey(KeyCode.W)) {
+            if (Input.GetKey(KeyCode.W))
+            {
                 v.z += 1f;
             }
-            if (Input.GetKey(KeyCode.S)) {
+            if (Input.GetKey(KeyCode.S))
+            {
                 v.z -= 1f;
             }
-            if (Input.GetKey(KeyCode.D)) {
+            if (Input.GetKey(KeyCode.D))
+            {
                 v.x += 1f;
             }
-            if (Input.GetKey(KeyCode.A)) {
+            if (Input.GetKey(KeyCode.A))
+            {
                 v.x -= 1f;
             }
 
@@ -84,4 +109,12 @@ public class script_PlayerMovement : MonoBehaviour {
             transform.position = pos;
         }
     }
+
+    void UpdateTask()
+    {
+        taskUI.text = "Current Task: " + taskList[currentTaskNum];
+        currentTaskNum++;
+        task = taskList[currentTaskNum];
+    }
+
 }
