@@ -2,17 +2,44 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(Camera))]
 public class script_PlayerMovement : MonoBehaviour {
     public GameObject canvas;  // for pauseing
+    CharacterController controller;
 
-    public float speed = 100;
-
-
-    void Start() {}
+    public float speed;
 
 
-    void Update() {
+    void Start() {
+        speed = 4.5f;
+        controller = GetComponent<CharacterController>();
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
+    }
+
+    private void Update()
+    {
+
+        float vertical = speed * Input.GetAxis("Vertical");
+        float horizontal = speed * Input.GetAxis("Horizontal");
+
+        Vector3 movement = new Vector3(horizontal, 0.0f, vertical);
+        movement = transform.TransformDirection(movement);
+        controller.SimpleMove(movement);
+
+        transform.Rotate(Vector3.up * Input.GetAxis("Mouse X") * 2f);
+        float mouse = Input.GetAxis("Mouse Y");
+        transform.Rotate(new Vector3(-mouse * 1f, 0, 0));
+
+        Vector3 currentRotation = transform.eulerAngles;
+        currentRotation.z = 0;
+        transform.eulerAngles = currentRotation;
+
+        // currentRotation.x = Mathf.Clamp(currentRotation.x, -45, 100);
+        // transform.localRotation = Quaternion.Euler(currentRotation);
+    }
+
+    void FixedUpdate() {
+        return;  // stop from running while I work on different movement code 
         Vector3 pos;
         Vector3 v;
 
