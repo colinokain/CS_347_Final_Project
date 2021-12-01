@@ -7,8 +7,8 @@ using UnityEngine.UI;
 public class PlayerScript : MonoBehaviour
 {
     [Header("Inspector-set Values:")]
-    public Text taskUI;
-    public GameObject canvas;  // for pausing
+    // public Text taskUI;
+    // public GameObject canvas;  // for pausing
     CharacterController controller;
 
     public float speed;
@@ -24,7 +24,7 @@ public class PlayerScript : MonoBehaviour
     {
         currentTaskNum = 0;
         task = "radio";
-        taskUI.text = "Current Task: " + task;
+        // taskUI.text = "Current Task: " + task;
         speed = 4.5f;
         controller = GetComponent<CharacterController>();
         Cursor.visible = false;
@@ -34,24 +34,25 @@ public class PlayerScript : MonoBehaviour
     private void Update()
     {
 
+        // Getting keyboard from input and building a velocity vector
         float vertical = speed * Input.GetAxis("Vertical");
         float horizontal = speed * Input.GetAxis("Horizontal");
-
         Vector3 movement = new Vector3(horizontal, 0.0f, vertical);
+
+        // Transforming built velocity vector to match the direction the player is currently facing
         movement = transform.TransformDirection(movement);
-        controller.SimpleMove(movement);
+        controller.SimpleMove(movement);    // Moving character controller
 
+        // Rotating player character based off mouse input
         transform.Rotate(Vector3.up * Input.GetAxis("Mouse X") * 2f);
-        float mouse = Input.GetAxis("Mouse Y");
-        transform.Rotate(new Vector3(-mouse * 1f, 0, 0));
+        transform.Rotate(Vector3.left * Input.GetAxis("Mouse Y") * 2f);
 
+        // Setting character's z rotation to 0 to avoid awkward camera angles
         Vector3 currentRotation = transform.eulerAngles;
         currentRotation.z = 0;
         transform.eulerAngles = currentRotation;
 
-        // currentRotation.x = Mathf.Clamp(currentRotation.x, -45, 100);
-        // transform.localRotation = Quaternion.Euler(currentRotation);
-
+        print(lookingAt());
     }
 
     void FixedUpdate()
@@ -60,61 +61,27 @@ public class PlayerScript : MonoBehaviour
         {
             UpdateTask();
         }
-        return;  // stop from running while I work on different movement code 
-        Vector3 pos;
-        Vector3 v;
-
-        Vector2 mouseDelta;
-        Quaternion rotation;
-        Quaternion horiz;
-        Quaternion vert;
-
-        if (PauseMenu.isPaused) { }
-        else
-        {
-            // rotation
-            mouseDelta = new Vector2(Input.GetAxis("Mouse X"), -Input.GetAxis("Mouse Y"));
-            rotation = transform.rotation;
-            horiz = Quaternion.AngleAxis(mouseDelta.x, Vector3.up);
-            vert = Quaternion.AngleAxis(mouseDelta.y, Vector3.right);
-            transform.rotation = horiz * rotation * vert;
-
-
-            // position
-            v = new Vector3(0f, 0f, 0f);
-            if (Input.GetKey(KeyCode.W))
-            {
-                v.z += 1f;
-            }
-            if (Input.GetKey(KeyCode.S))
-            {
-                v.z -= 1f;
-            }
-            if (Input.GetKey(KeyCode.D))
-            {
-                v.x += 1f;
-            }
-            if (Input.GetKey(KeyCode.A))
-            {
-                v.x -= 1f;
-            }
-
-            v = v * speed * Time.deltaTime;
-
-            transform.Translate(v, Space.Self);
-
-            pos = this.transform.position;
-            pos.y = 3.5f;
-
-            transform.position = pos;
-        }
     }
 
     void UpdateTask()
     {
-        taskUI.text = "Current Task: " + taskList[currentTaskNum];
+        // taskUI.text = "Current Task: " + taskList[currentTaskNum];
         currentTaskNum++;
         task = taskList[currentTaskNum];
+    }
+
+    GameObject lookingAt()
+    {
+        RaycastHit hit;
+        Camera camera = GameObject.FindWithTag("MainCamera").GetComponent<Camera>();
+        Ray ray = camera.ScreenPointToRay(Input.mousePosition);
+
+        if (!Physics.Raycast(ray, out hit))
+        {
+            return null;
+        }
+
+        return hit.transform.gameObject;
     }
 
 }

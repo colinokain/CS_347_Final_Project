@@ -282,6 +282,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7966332840939441674}
+  - component: {fileID: 2236026364752459216}
   m_Layer: 0
   m_Name: Bed
   m_TagString: Untagged
@@ -317,6 +318,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &2236026364752459216
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2063540955445781665}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 3.4860256, y: 1.9645739, z: 5.7512054}
+  m_Center: {x: 0.009604096, y: 0.48228693, z: 0.002937317}
 --- !u!1 &2729579050885596510
 GameObject:
   m_ObjectHideFlags: 0
@@ -965,7 +979,6 @@ GameObject:
   - component: {fileID: 312820538154718817}
   - component: {fileID: 7738175804278167668}
   - component: {fileID: 687020769416895857}
-  - component: {fileID: 419717072366083266}
   m_Layer: 0
   m_Name: Capsule (1)
   m_TagString: Untagged
@@ -1032,20 +1045,6 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!136 &419717072366083266
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5926978910610670215}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: 0.5
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &7414581091885078051
 GameObject:
   m_ObjectHideFlags: 0
@@ -1148,7 +1147,6 @@ GameObject:
   - component: {fileID: 825833176175482357}
   - component: {fileID: 4062339456139440295}
   - component: {fileID: 8428630325817389640}
-  - component: {fileID: 6563164916831433722}
   m_Layer: 0
   m_Name: Capsule
   m_TagString: Untagged
@@ -1215,20 +1213,6 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!136 &6563164916831433722
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7598872916420756952}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: 0.5
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &8443225153842770473
 GameObject:
   m_ObjectHideFlags: 0
