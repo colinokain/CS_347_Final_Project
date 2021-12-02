@@ -8,6 +8,7 @@ public class ObjectiveItems : MonoBehaviour
     private static ArrayList RadioSpots = new ArrayList();
     private static ArrayList GunSpots = new ArrayList();
     private static ArrayList KeySpots = new ArrayList();
+    private static ArrayList BlackmailSpots = new ArrayList();
 
 
     private Vector3 newLoc;
@@ -15,8 +16,6 @@ public class ObjectiveItems : MonoBehaviour
     void Start()
     {
         LoadLocations();
-
-
     }
 
     void LoadLocations()
@@ -44,7 +43,21 @@ public class ObjectiveItems : MonoBehaviour
         }
         else if(this.gameObject.tag == "Blackmail")
         {
-
+            locations = GameObject.FindGameObjectsWithTag("BlackmailLocation");
+            index = Random.Range(0, locations.Length);
+            this.gameObject.transform.position = locations[index].transform.position;
+        }
+        else if (this.gameObject.tag == "HardDrive")
+        {
+            locations = GameObject.FindGameObjectsWithTag("HardDriveLocation");
+            index = Random.Range(0, locations.Length);
+            this.gameObject.transform.position = locations[index].transform.position;
+        }
+        else if(this.gameObject.tag == "VoodooDoll")
+        {
+            locations = GameObject.FindGameObjectsWithTag("VoodooLocation");
+            index = Random.Range(0, locations.Length);
+            this.gameObject.transform.position = locations[index].transform.position;
         }
 
 

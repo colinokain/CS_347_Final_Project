@@ -16,6 +16,11 @@ TagManager:
   - WeaponLocation
   - BlackmailLocation
   - KeyLocation
+  - VoodooLocation
+  - VoodooDoll
+  - NarrativeTag
+  - HardDrive
+  - HardDriveLocation
   layers:
   - Default
   - TransparentFX
