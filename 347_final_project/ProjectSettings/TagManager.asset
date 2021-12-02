@@ -24,6 +24,8 @@ TagManager:
   - Flashlight
   - FlashlightLight
   - PlayerFlashlight
+  - NPC
+  - GameOverTag
   layers:
   - Default
   - TransparentFX

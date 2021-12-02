@@ -29,6 +29,19 @@ public class NPCMovement : MonoBehaviour
         UnityEngine.AI.NavMeshAgent agent;
         agent = GetComponent<UnityEngine.AI.NavMeshAgent>();    // geting navmesh agent
 
+        GameObject player = GameObject.FindWithTag("Player");
+        Vector3 position = transform.position;
+        print(Vector3.Distance(player.transform.position, position));
+        if (Vector3.Distance(player.transform.position, position) < 3f)
+        {
+            Application.Quit();
+
+            #if UNITY_EDITOR
+                        UnityEditor.EditorApplication.isPlaying = false;                
+            #endif
+        }
+
+
         if (playerInSight())        // if npc can see the player
         {
             state = "persue";       // change state to persue

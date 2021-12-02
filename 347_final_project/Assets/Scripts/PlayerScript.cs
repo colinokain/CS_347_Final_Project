@@ -32,7 +32,7 @@ public class PlayerScript : MonoBehaviour
 
 
 
-
+    //Loading all defaults
     void Start()
     {
         ToggleFlashLight();
@@ -123,6 +123,7 @@ public class PlayerScript : MonoBehaviour
         }
     }
 
+    //Updating player objective
     void UpdateTask()
     {
         taskUI.text = "Current Task: " + taskList[currentTaskNum];
@@ -137,7 +138,8 @@ public class PlayerScript : MonoBehaviour
         };
         Invoke("ClearNarrative", 5f);
     }
-
+    
+    //Returns object looked at
     GameObject lookingAt()
     {
         RaycastHit hit;
@@ -155,6 +157,7 @@ public class PlayerScript : MonoBehaviour
     void Interact()
     {
         GameObject item = lookingAt();
+        //Getting the item the player is looking at and updates the objective
         try { 
             if (item.tag == "Flashlight")
             {
@@ -242,6 +245,8 @@ public class PlayerScript : MonoBehaviour
     void WinGame()
     {
         narrativeTextUI.text = "I'm out! Now I can bring this information and get him taken away forever.";
+        Destroy(GameObject.FindWithTag("NPC"));
+        Invoke("GameOver", 2.0f);
         // win the game :D
     }
 
@@ -261,5 +266,16 @@ public class PlayerScript : MonoBehaviour
                 light.intensity = 1;
             }
         }
+    }
+
+    void GameOver()
+    {
+
+        Application.Quit();
+
+        #if UNITY_EDITOR
+                    UnityEditor.EditorApplication.isPlaying = false;                
+        #endif        
+        
     }
 }
