@@ -21,6 +21,9 @@ TagManager:
   - NarrativeTag
   - HardDrive
   - HardDriveLocation
+  - Flashlight
+  - FlashlightLight
+  - PlayerFlashlight
   layers:
   - Default
   - TransparentFX

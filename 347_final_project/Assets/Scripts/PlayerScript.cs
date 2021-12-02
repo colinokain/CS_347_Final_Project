@@ -18,8 +18,9 @@ public class PlayerScript : MonoBehaviour
     private bool paused = false;
     private string task;
     private int currentTaskNum;
-    private string[] taskList = new string[] { "radio", "weapon", "blackmail", "voodoo", "harddrive", "key", "leave the house" };
-    private string[] taskNarrations = new string[] {"I think I hear him coming... I need to find a radio to call for help.",
+    private string[] taskList = new string[] { "flashlight", "radio", "weapon", "blackmail", "voodoo", "harddrive", "key", "leave the house" };
+    private string[] taskNarrations = new string[] {"Oh no my power went out, I should grab my flashlight",
+                                                    "I think I hear him coming... I need to find a radio to call for help.",
                                                     "Shoot... This radio has no batteries. I know my gun is around here. I need to find it.",
                                                     "Dang, I forgot I have no ammo because of the ammo shortage. I should go ahead and find the evidence on the killer.",
                                                     "There's the evidence I was looking for. I should see if the voodoo doll I have works. Worth a shot.",
@@ -34,8 +35,14 @@ public class PlayerScript : MonoBehaviour
 
     void Start()
     {
+        ToggleFlashLight();
+        foreach (Renderer r in GameObject.FindWithTag("PlayerFlashlight").GetComponentsInChildren(typeof(Renderer)))
+        {
+            r.enabled = false;
+        }
+
         currentTaskNum = 0;
-        task = "radio";
+        task = "flashlight";
         taskUI.text = "Current Task: " + task;
         narrativeTextUI.text = taskNarrations[0];
         speed = 4.5f;
@@ -70,6 +77,12 @@ public class PlayerScript : MonoBehaviour
                 Time.timeScale = 0;
             }
         }
+
+        if (Input.GetKeyDown(KeyCode.F) && currentTaskNum > 0)
+        {
+            ToggleFlashLight();
+        }
+          
 
         if (paused)
         {
@@ -143,6 +156,17 @@ public class PlayerScript : MonoBehaviour
     {
         GameObject item = lookingAt();
         try { 
+            if (item.tag == "Flashlight")
+            {
+                Destroy(item);
+                foreach (Renderer r in GameObject.FindWithTag("PlayerFlashlight").GetComponentsInChildren(typeof(Renderer)))
+                {
+                    r.enabled = true;
+                }
+                ToggleFlashLight();
+                currentTaskNum++;
+                UpdateTask();
+            }
             if (item.tag == "Radio")
             {
                 if (taskList[currentTaskNum] == task && task == "radio")
@@ -219,5 +243,23 @@ public class PlayerScript : MonoBehaviour
     {
         narrativeTextUI.text = "I'm out! Now I can bring this information and get him taken away forever.";
         // win the game :D
+    }
+
+    void ToggleFlashLight()
+    {
+        GameObject[] lights = GameObject.FindGameObjectsWithTag("FlashlightLight");
+        foreach (GameObject lightObject in lights)
+        {
+            Light light = lightObject.GetComponent<Light>();
+
+            if (light.intensity == 1)
+            {
+                light.intensity = 0;
+            }
+            else
+            {
+                light.intensity = 1;
+            }
+        }
     }
 }

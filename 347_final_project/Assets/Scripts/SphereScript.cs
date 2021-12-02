@@ -6,6 +6,6 @@ public class SphereScript : MonoBehaviour
 {
     void Start()
     {
-        GetComponent<Renderer>().enabled = false;
+        GetComponent<Renderer>().enabled = false;   // makes object invisible
     }
 }
