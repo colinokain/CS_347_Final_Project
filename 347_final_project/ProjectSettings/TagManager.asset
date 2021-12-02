@@ -11,6 +11,11 @@ TagManager:
   - Blackmail
   - Key
   - Door
+  - PauseMenu
+  - RadioLocation
+  - WeaponLocation
+  - BlackmailLocation
+  - KeyLocation
   layers:
   - Default
   - TransparentFX

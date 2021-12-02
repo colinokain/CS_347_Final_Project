@@ -21,33 +21,26 @@ public class ObjectiveItems : MonoBehaviour
 
     void LoadLocations()
     {
+        int index;
+        GameObject[] locations;
 
-        if(this.gameObject.tag == "Radio")
+        if (this.gameObject.tag == "Radio")
         {
-            int radioSpot = Random.Range(0,3);
-            RadioSpots.Add(new Vector3(25.5f, 2.395f, 180.735f));
-            RadioSpots.Add(new Vector3(17.19f, 1.63f, 179.43f));
-            RadioSpots.Add(new Vector3(5.23f, 1.98f, 179.43f));
-            newLoc = (Vector3)RadioSpots[radioSpot];
-            this.gameObject.transform.position = newLoc;
+            locations = GameObject.FindGameObjectsWithTag("RadioLocation");
+            index = Random.Range(0, locations.Length);
+            this.gameObject.transform.position = locations[index].transform.position;
         }
         else if(this.gameObject.tag == "Gun")
         {
-            int gunSpot = Random.Range(0, 3);
-            GunSpots.Add(new Vector3(24.705f, 0.25f, 207.9099f));
-            GunSpots.Add(new Vector3(20f, 9.467f, 197.7f));
-            GunSpots.Add(new Vector3(-9.543f, 9.968f, 197.7f));
-            newLoc = (Vector3)GunSpots[gunSpot];
-            this.gameObject.transform.position = newLoc;
+            locations = GameObject.FindGameObjectsWithTag("WeaponLocation");
+            index = Random.Range(0, locations.Length);
+            this.gameObject.transform.position = locations[index].transform.position;
         }
         else if (this.gameObject.tag == "Key")
         {
-            int keySpot = Random.Range(0, 2);
-            print(keySpot);
-            KeySpots.Add(new Vector3(10.238f, 1.845f, 190.998f));
-            KeySpots.Add(new Vector3(-18.886f, 2.385f, 190.998f));
-            newLoc = (Vector3)KeySpots[keySpot];
-            this.gameObject.transform.position = newLoc;
+            locations = GameObject.FindGameObjectsWithTag("KeyLocation");
+            index = Random.Range(0, locations.Length);
+            this.gameObject.transform.position = locations[index].transform.position;
         }
         else if(this.gameObject.tag == "Blackmail")
         {

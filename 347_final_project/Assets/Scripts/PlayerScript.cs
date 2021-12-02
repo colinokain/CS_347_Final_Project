@@ -9,11 +9,12 @@ public class PlayerScript : MonoBehaviour
     [Header("Inspector-set Values:")]
     public Text taskUI;
     // public GameObject canvas;  // for pausing
-    CharacterController controller;
+    private CharacterController controller;
 
     public float speed;
+    public float sensitivity = 2.0f;
 
-    private bool canMove;
+    private bool paused = false;
     private string task;
     private int currentTaskNum;
     private string[] taskList = new string[] { "radio", "weapon", "key", "leave the house", "blackmail" };
@@ -25,7 +26,6 @@ public class PlayerScript : MonoBehaviour
 
     void Start()
     {
-        canMove = true;
         currentTaskNum = 0;
         task = "radio";
         taskUI.text = "Current Task: " + task;
@@ -37,37 +37,53 @@ public class PlayerScript : MonoBehaviour
 
     private void Update()
     {
-
-
-        if (canMove)
+        if (Input.GetKeyDown(KeyCode.Escape))
         {
-
-            // Getting keyboard from input and building a velocity vector
-            float vertical = speed * Input.GetAxis("Vertical");
-            float horizontal = speed * Input.GetAxis("Horizontal");
-            movement = new Vector3(horizontal, 0.0f, vertical);
-
-            // Transforming built velocity vector to match the direction the player is currently facing
-            movement = transform.TransformDirection(movement);
-            controller.SimpleMove(movement);    // Moving character controller
-
+            if (paused)
+            {
+                Cursor.visible = false;
+                Cursor.lockState = CursorLockMode.Locked;
+                GameObject.FindWithTag("PauseMenu").GetComponent<Canvas>().enabled = false;
+                paused = false;
+                Time.timeScale = 1;
+            }
+            else
+            {
+                Cursor.visible = true;
+                Cursor.lockState = CursorLockMode.None;
+                GameObject.FindWithTag("PauseMenu").GetComponent<Canvas>().enabled = true;
+                paused = true;
+                Time.timeScale = 0;
+            }
         }
+
+        if (paused)
+        {
+            return;
+        }
+
+        // Getting keyboard from input and building a velocity vector
+        float vertical = speed * Input.GetAxis("Vertical");
+        float horizontal = speed * Input.GetAxis("Horizontal");
+        movement = new Vector3(horizontal, 0.0f, vertical);
+
+        controller = GetComponent<CharacterController>();
+        // Transforming built velocity vector to match the direction the player is currently facing
+        movement = transform.TransformDirection(movement);
+        controller.SimpleMove(movement);    // Moving character controller
 
 
         // Rotating player character based off mouse input
-        transform.Rotate(Vector3.up * Input.GetAxis("Mouse X") * 2f);
-        transform.Rotate(Vector3.left * Input.GetAxis("Mouse Y") * 2f);
+        transform.Rotate(Vector3.up * Input.GetAxis("Mouse X") * sensitivity);
+        transform.Rotate(Vector3.left * Input.GetAxis("Mouse Y") * sensitivity);
 
         // Setting character's z rotation to 0 to avoid awkward camera angles
         Vector3 currentRotation = transform.eulerAngles;
         currentRotation.z = 0;
         transform.eulerAngles = currentRotation;
 
-        print(lookingAt());
-
         if (Input.GetKeyDown(KeyCode.E))
         {
-            canMove = false;
             Interact();
         }
     }
@@ -137,18 +153,6 @@ public class PlayerScript : MonoBehaviour
                     UpdateTask();
                 }
             }
-            else if (item.tag == "Door")
-            {
-                if (inventory.Contains("KeyHouse1"))
-                {
-                    TeleportToHouse2();
-                    if (task != "blackmail")
-                    {
-                        currentTaskNum++;
-                        UpdateTask();
-                    }
-                }
-            }
             else if (item.tag == "Blackmail")
             {
                 print(task);
@@ -161,18 +165,21 @@ public class PlayerScript : MonoBehaviour
                     UpdateTask();
                 }
             }
+            else if (item.tag == "Door")
+            {
+                if (inventory.Contains("KeyHouse1"))
+                {
+                    WinGame();
+                }
+            }
         }
         catch
         {
-
         };
-        canMove = true;
     }
 
-    void TeleportToHouse2()
+    void WinGame()
     {
-        Vector3 test = new Vector3(-112.0118f, 5.546f, -135.415f);
-
-        this.gameObject.transform.position = test;
+        // win the game :D
     }
 }

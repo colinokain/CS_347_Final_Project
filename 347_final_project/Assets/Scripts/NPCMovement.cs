@@ -8,6 +8,7 @@ public class NPCMovement : MonoBehaviour
     private float rotateSpeed = 3.0f;       // speed NPC rotates during survey state
     private float sightDistance = 17.0f;    // distance NPC can see player from
     private float senseDistance = 5.0f;     // distance NPC can "sense" the player from regardless of orientation or line of sight
+    private float fov = 0.5f;
     private GameObject[] locations;
     public string state;
     private float startingOrientation;
@@ -25,8 +26,6 @@ public class NPCMovement : MonoBehaviour
 
     void Update()
     {
-        GameObject player;
-        Vector3 pos;
         UnityEngine.AI.NavMeshAgent agent;
 
         agent = GetComponent<UnityEngine.AI.NavMeshAgent>();
@@ -92,12 +91,12 @@ public class NPCMovement : MonoBehaviour
 
         orientation = transform.eulerAngles.y * Mathf.Deg2Rad;
 
-        x1 = position.x + (sightDistance * Mathf.Cos(orientation - 1.0f));
-        z1 = position.z - (sightDistance * Mathf.Sin(orientation - 1.0f));
+        x1 = position.x + (sightDistance * Mathf.Cos(orientation - fov));
+        z1 = position.z - (sightDistance * Mathf.Sin(orientation - fov));
         pos1 = new Vector3(x1, 0.0f, z1);
 
-        x2 = position.x - (sightDistance * Mathf.Cos(orientation + 1.0f));
-        z2 = position.z + (sightDistance * Mathf.Sin(orientation + 1.0f));
+        x2 = position.x - (sightDistance * Mathf.Cos(orientation + fov));
+        z2 = position.z + (sightDistance * Mathf.Sin(orientation + fov));
         pos2 = new Vector3(x2, 0.0f, z2);
 
 
