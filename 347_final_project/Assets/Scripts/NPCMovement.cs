@@ -33,14 +33,10 @@ public class NPCMovement : MonoBehaviour
 
         GameObject player = GameObject.FindWithTag("Player");
         Vector3 position = transform.position;
-        print(Vector3.Distance(player.transform.position, position));
+
         if (Vector3.Distance(player.transform.position, position) < 3f)
         {
-            Application.Quit();
-
-            #if UNITY_EDITOR
-                        UnityEditor.EditorApplication.isPlaying = false;                
-            #endif
+            Application.LoadLevel(Application.loadedLevel);
         }
 
 
